@@ -1,0 +1,38 @@
+<h4>new product</h4>
+<form id="createProduct" (ngSubmit)="onSubmit($event)">
+  <div class="form-group">
+    <label for="productName">product name</label>
+    <input
+      type="text"
+      [(ngModel)]="name"
+      name="name"
+      class="form-control"
+      id="productName"
+      placeholder="product name"
+    />
+  </div>
+  <div class="form-group">
+    <label for="productPrice">product price</label>
+    <input
+      type="text"
+      [(ngModel)]="price"
+      name="price"
+      class="form-control"
+      id="productPrice"
+      placeholder="product price"
+    />
+  </div>
+  <div class="form-group">
+    <label for="productOnSale">product is onsale</label>
+    <select
+      class="form-control"
+      [(ngModel)]="onsale"
+      name="onsale"
+      id="productOnSale"
+    >
+      <option value="false" selected="">No</option>
+      <option value="true">Yes</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-sm btn-outline-info mb-2">Add</button>
+</form>

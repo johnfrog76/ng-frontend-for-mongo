@@ -1,4 +1,11 @@
-# NgFrontend
+## Frontend Angular App for mongo-mongoose project
+
+- backend project is located here (https://github.com/johnfrog76/mongo-mongoose)
+- Angular with forms, routing full crud
+
+---
+
+## NgFrontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.4.
 

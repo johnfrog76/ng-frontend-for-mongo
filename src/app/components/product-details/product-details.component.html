@@ -1,0 +1,25 @@
+<h4>product details</h4>
+<app-loading *ngIf="isLoading"></app-loading>
+<div *ngIf="product">
+  <ul>
+    <li>name: {{ product.name }}</li>
+    <li>price: {{ product.price | currency: "":"" }}</li>
+    <li>onsale: {{ product.onsale }}</li>
+  </ul>
+  <div>
+    <button
+      (click)="onDeleteProduct($event)"
+      class="btn btn-sm btn-outline-danger mr-1"
+    >
+      Delete
+    </button>
+    <a
+      class="btn btn-sm btn-outline-success"
+      routerLink="/update/{{ product._id }}"
+      >Edit</a
+    >
+  </div>
+</div>
+<div *ngIf="deleteSuccess !== ''">
+  <p class="text-success">{{ deleteSuccess }}</p>
+</div>
