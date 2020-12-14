@@ -1,9 +1,13 @@
 <h4>products</h4>
 <app-loading *ngIf="isLoading"></app-loading>
-<ul class="product-list">
+
+<ul *ngIf="!isLoading" class="product-list">
   <li *ngFor="let item of products">
     <a class="text-info" routerLink="/details/{{ item._id }}">{{
       item.name
     }}</a>
+  </li>
+  <li *ngIf="products.length === 0">
+    <a class="text-info" routerLink="/add">No products. Try adding one?</a>
   </li>
 </ul>

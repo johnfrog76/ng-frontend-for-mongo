@@ -1,9 +1,6 @@
 <h4>update product</h4>
 <app-loading *ngIf="isLoading"></app-loading>
 <div *ngIf="!isLoading">
-  <div *ngIf="messageSuccess !== ''" class="message text-success">
-    {{ messageSuccess }}
-  </div>
   <form id="updateProduct" (ngSubmit)="onSubmit($event)">
     <div class="form-group">
       <label for="productName">product name</label>

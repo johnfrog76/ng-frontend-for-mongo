@@ -1,0 +1,11 @@
+.close-message {
+  float: right;
+  cursor: pointer;
+  color: #ccc;
+}
+
+ul.messages-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

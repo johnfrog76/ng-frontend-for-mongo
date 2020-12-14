@@ -1,13 +1,19 @@
-
 <div class="masthead mb-auto">
   <div class="inner">
-    <h3 class="masthead-brand"><a routerLink="/">{{title}}</a></h3>
+    <h3 class="masthead-brand">
+      <a routerLink="/">{{ title }}</a>
+    </h3>
     <nav class="nav nav-masthead justify-content-center">
-      <a class="nav-link" routerLinkActive="active" routerLink="/products">Home</a>
-      <a class="nav-link" routerLinkActive="active" routerLink="/add">Add Product</a>
+      <a class="nav-link" routerLinkActive="active" routerLink="/products"
+        >Home</a
+      >
+      <a class="nav-link" routerLinkActive="active" routerLink="/add"
+        >Add Product</a
+      >
     </nav>
   </div>
 </div>
 <main class="inner">
+  <app-messages></app-messages>
   <router-outlet></router-outlet>
 </main>

@@ -29,6 +29,9 @@ export class AddProductComponent implements OnInit {
     this.name = "";
     this.price = null;
     this.onsale = false;
+    setTimeout(() => {
+      this.location.back();
+    }, 2000);
   }
 
   addProduct(product: Product): void {

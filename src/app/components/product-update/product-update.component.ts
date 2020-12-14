@@ -16,7 +16,6 @@ export class ProductUpdateComponent implements OnInit {
   price: number = null;
   onsale = false;
   isLoading = false;
-  messageSuccess = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -34,13 +33,14 @@ export class ProductUpdateComponent implements OnInit {
     this.name = product.name;
     this.price = product.price;
     this.onsale = product.onsale;
-    this.isLoading = false;
   }
 
   // on page load
   getProduct(): void {
     const prodId = this.route.snapshot.paramMap.get("name");
+
     this.productsService.getProductDetails(prodId).subscribe((product) => {
+      this.isLoading = false;
       this.product = product.product;
       this.setValues();
     });
@@ -52,12 +52,10 @@ export class ProductUpdateComponent implements OnInit {
     this.product.price = this.price;
     this.product.onsale = this.onsale;
     this.productsService.updateProduct(this.product).subscribe((product) => {
-      console.log("success");
       this.isLoading = false;
-      this.messageSuccess = "Product updated!";
       setTimeout(() => {
         this.location.back();
-      }, 1500);
+      }, 2000);
     });
   }
 }

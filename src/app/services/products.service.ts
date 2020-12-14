@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Product } from "../interfaces/product";
+import { Message } from "../interfaces/message";
 import { ProductDetail } from "../interfaces/productDetail";
 import { DeleteMessage } from "../interfaces/deleteMessage";
+import { MessageService } from "../services/message.service";
 
 import { Observable, of } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
@@ -17,37 +19,45 @@ export class ProductsService {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService
+  ) {}
 
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.url).pipe(
-      tap((_) => this.log("fetched products")),
-      catchError(this.handleError<Product[]>("getProducts", []))
+      tap((_) => this.log({ type: "console", message: "fetched products" })),
+      catchError(this.handleError<Product[]>("Get Products", []))
     );
   }
 
   deleteProduct(product: Product): Observable<DeleteMessage> {
     const url = `${this.url}/${product._id}`;
     return this.http.delete<DeleteMessage>(url, this.httpOptions).pipe(
-      tap((_) => this.log(`deleted product`)),
-      catchError(this.handleError<DeleteMessage>("delete product error"))
+      tap((_) => this.log({ type: "success", message: `deleted product` })),
+      catchError(this.handleError<DeleteMessage>("Delete Product"))
     );
   }
 
   getProductDetails(id: string): Observable<ProductDetail> {
     const url = `${this.url}/${id}`;
     return this.http.get<ProductDetail>(url).pipe(
-      tap((_) => this.log(`fetched product id=${id}`)),
-      catchError(this.handleError<ProductDetail>(`getProduct id=${id}`))
+      tap((_) =>
+        this.log({ type: "console", message: `fetched product id=${id}` })
+      ),
+      catchError(this.handleError<ProductDetail>(`Get Product id=${id}`))
     );
   }
 
   addProduct(product: Product): Observable<Product> {
     return this.http.post<Product>(this.url, product, this.httpOptions).pipe(
       tap((newProduct: Product) =>
-        this.log(`added product w/ id=${newProduct._id}`)
+        this.log({
+          type: "success",
+          message: `added product w/ id=${newProduct._id}`,
+        })
       ),
-      catchError(this.handleError<Product>("addProduct error"))
+      catchError(this.handleError<Product>("Add Product"))
     );
   }
 
@@ -55,8 +65,13 @@ export class ProductsService {
     return this.http
       .patch(`${this.url}/${product._id}`, product, this.httpOptions)
       .pipe(
-        tap((_) => this.log(`updated product id=${product._id}`)),
-        catchError(this.handleError<any>("error: updateHero"))
+        tap((_) =>
+          this.log({
+            type: "success",
+            message: `updated product id=${product._id}`,
+          })
+        ),
+        catchError(this.handleError<any>("Update Product"))
       );
   }
 
@@ -71,8 +86,10 @@ export class ProductsService {
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      this.log({
+        type: "error",
+        message: `${operation} failed: ${error.message}`,
+      });
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -80,8 +97,7 @@ export class ProductsService {
   }
 
   /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    // this.messageService.add(`HeroService: ${message}`);
-    console.log(message);
+  private log(message: Message) {
+    this.messageService.add(message);
   }
 }

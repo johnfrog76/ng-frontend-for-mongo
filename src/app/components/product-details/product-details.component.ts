@@ -13,7 +13,6 @@ import { ProductsService } from "../../services/products.service";
 })
 export class ProductDetailsComponent implements OnInit {
   product: Product;
-  deleteSuccess: string;
   isLoading = false;
 
   constructor(
@@ -37,11 +36,10 @@ export class ProductDetailsComponent implements OnInit {
 
   onDeleteProduct(): void {
     this.productsService.deleteProduct(this.product).subscribe((message) => {
-      this.deleteSuccess = message.message;
       this.product = null;
       setTimeout(() => {
         this.location.back();
-      }, 1000);
+      }, 2000);
     });
   }
 }
